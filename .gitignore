@@ -1,0 +1,21 @@
+# Secrets and local config — never commit
+.env
+.env.*
+!.env.example
+secrets.env
+*.local.*
+*.pem
+*.key
+
+# Runtime / caches
+__pycache__/
+*.pyc
+node_modules/
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
