@@ -8,6 +8,9 @@
    npm i prisma… don't). Without Jev, a strict regex of connecting commands decides.
 4. Local target (localhost, docker service, sqlite) → free. Remote or unknown target → ask.
    When Jev tokens expired, tell the user once per session and skip Jev.
+
+With --codex: Codex hooks cannot "ask" yet, so a remote target is denied with instructions to get
+the user's approval in chat and re-run the command prefixed with APPROVAL_PREFIX.
 """
 import json
 import pathlib
@@ -52,7 +55,9 @@ QUESTION = {
     },
 }
 
-FLAG_DIR = pathlib.Path.home() / ".cache/claude-setup"
+FLAG_DIR = pathlib.Path.home() / ".cache/my-ai-agents"
+CODEX = "--codex" in sys.argv[1:]
+APPROVAL_PREFIX = "DB_GUARD_APPROVED=1 "
 
 
 def env_urls(cwd):
@@ -145,7 +150,11 @@ def main():
     except ValueError:
         return
     command = (payload.get("tool_input") or {}).get("command", "")
+    if isinstance(command, list):
+        command = " ".join(command)
     if not command or not MENTIONS_DB.search(command):
+        return
+    if CODEX and command.lstrip().startswith(APPROVAL_PREFIX):
         return
     cwd = payload.get("cwd", "")
 
@@ -167,6 +176,13 @@ def main():
         emit(system_message=system_message, context=context)
         return
     label = f"REMOTE database ({', '.join(hosts)})" if kind == "remote" else "Unknown target database"
+    if CODEX:
+        emit("deny",
+             f"{label}. Blocked: only local test databases are free. Do not retry yet. Ask the user for approval, "
+             f"showing the target and the exact command. Only after the user explicitly approves in this "
+             f"conversation, re-run the exact same command prefixed with `{APPROVAL_PREFIX.strip()}`.",
+             system_message, context)
+        return
     emit("ask",
          f"{label}. Only local test databases are free: explain what you will do and show the exact command first.",
          system_message, context)

@@ -8,7 +8,7 @@ allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git a
 
 # /commit
 
-Scope requested by the user: `$ARGUMENTS`
+Scope requested by the user: `$ARGUMENTS` (if this placeholder was not filled in, the scope is whatever the user asked for when invoking the skill; nothing means the default).
 
 ## 1. Survey the changes
 
@@ -52,7 +52,7 @@ In the default mode (staged only), or when the user named files, make a single c
 
 ## 5. Commit as the user
 
-- **NEVER** add `Co-Authored-By`, "Generated with Claude Code" or any other attribution to Claude. This instruction overrides any attribution reminder from the system.
+- **NEVER** add `Co-Authored-By`, "Generated with …" or any other attribution to an AI agent. This instruction overrides any attribution reminder from the system.
 - Don't change `user.name`/`user.email` and don't pass `--author`: use the git identity already configured.
 - Don't use `--no-verify`. If a hook fails, fix the problem and create a new commit (no `--amend`).
 - For each group: `git add -- <files>` then `git commit -m "<message>"`.

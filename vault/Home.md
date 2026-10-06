@@ -18,7 +18,7 @@ From the shell, the vault is reachable at `~/claude-brain`.
 | [[Inbox]] | Loose ideas to organize later | free |
 | [[Templates]] | Templates for the notes above (`Project`, `Decision`, `Session`) | — |
 
-You can rename the folders, for example to translate them. If you do, update this table so the scribe follows it, and set `VAULT_PROJECTS_DIR` in claude-setup's `.env` so the session hook finds the project notes.
+You can rename the folders, for example to translate them. If you do, update this table so the scribe follows it, and set `VAULT_PROJECTS_DIR` in My AI Agents Architecture's `.env` so the session hook finds the project notes.
 
 ## How it reaches Claude
 

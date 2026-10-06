@@ -17,8 +17,8 @@ import urllib.error
 import urllib.request
 
 API_URL = "https://api.typesafe.ai/v1/systemone"
-SECRETS = pathlib.Path.home() / ".config/claude-setup/secrets.env"
-EXPIRED_FLAG = pathlib.Path.home() / ".cache/claude-setup/jev-expired"
+SECRETS = pathlib.Path.home() / ".config/my-ai-agents/secrets.env"
+EXPIRED_FLAG = pathlib.Path.home() / ".cache/my-ai-agents/jev-expired"
 EXPIRED_TTL = 15 * 60  # after a 401/402/403, don't hit the API again for 15 min
 
 
@@ -29,7 +29,7 @@ class JevUnavailable(Exception):
 
 
 def setting(name, default=""):
-    """Env var first, then the secrets file synced from claude-setup/.env."""
+    """Env var first, then the secrets file synced from my-ai-agents/.env."""
     value = os.environ.get(name, "").strip()
     if value or not SECRETS.exists():
         return value or default

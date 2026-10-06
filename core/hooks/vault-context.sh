@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # SessionStart: injects the current repo's project note from the "Claude Brain" vault.
 VAULT="$HOME/claude-brain"
-SECRETS="$HOME/.config/claude-setup/secrets.env"
+SECRETS="$HOME/.config/my-ai-agents/secrets.env"
 [ -f "$SECRETS" ] && { set -a; . "$SECRETS" 2>/dev/null; set +a; }
 PROJECTS="$VAULT/${VAULT_PROJECTS_DIR:-Projects}"
 [ -d "$PROJECTS" ] || exit 0
